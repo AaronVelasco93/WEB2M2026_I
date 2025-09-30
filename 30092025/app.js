@@ -2,7 +2,7 @@
 let tareas = [];
 
 // funcion para mostrar el menu de opciones
-function mostrarTareas(){
+function mostrarMenu(){
     return parseInt( prompt(`
         Opciones Disponibles:
         1.- Agregar tarea.
@@ -32,15 +32,59 @@ function agregarTarea(){
 }
 
 //Funcion para ver todas las tareas
-
 function verTareas(){
     if( tareas.length === 0){
         alert("No hay tareas en la lista");
     }else{
-        let mensaje = "Lista de tareas";
+        let mensaje = "Lista de tareas \n";
         tareas.forEach((tarea,index)=>{
             mensaje+=`${index + 1}.- ${tarea.nombre} [${tarea.completado ? "Completada" :"Pendiente"}]\n`;
         });
         alert(mensaje);
     }
 }
+
+//Marcar tarea como completada
+function marcarTareaCompletada( ){
+    let numero = parseInt(prompt( "Introduce el numeor de la tarea que se desea marcar como completada"));
+    if( numero > 0 && numero <= tareas.length ){
+
+        tareas[numero - 1].completado=true;
+        alert(`La tarea "${tareas[numero-1].nombre}" ha sido marcada como copletada.`);
+    }else{
+        alert("Numero de tarea invalido");
+    }
+}   
+
+// funcion para manejar el flujo de nuestro programa
+function iniciarPrograma(){
+    let continuar = true;
+
+    while(continuar){
+            let opcion= mostrarMenu();
+
+            switch(opcion){
+                case 1: 
+                    agregarTarea();
+                    break;
+                case 2:
+                    verTareas();
+                    break;
+                case 3:
+                    marcarTareaCompletada();
+                    break;
+                case 4:
+                    alert("Saliendo del programa");
+                    continuar = false;
+                    break
+                default:
+                    alert("Opcion no valida. Intenta de nuevo");
+            }
+    }
+    alert("Programa finalizado")
+
+
+}
+
+//Iniciar programa
+iniciarPrograma();
