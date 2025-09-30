@@ -8,6 +8,7 @@ function mostrarMenu(){
         1.- Agregar tarea.
         2.-Ver todas las tareas.
         3.-Marcar tarea como completada.
+        4.- Eliminar tarea
         4.-Salir.
         "Elige una opcion"
         `));
@@ -46,7 +47,7 @@ function verTareas(){
 
 //Marcar tarea como completada
 function marcarTareaCompletada( ){
-    let numero = parseInt(prompt( "Introduce el numeor de la tarea que se desea marcar como completada"));
+    let numero = parseInt(prompt( "Introduce el numero de la tarea que se desea marcar como completada"));
     if( numero > 0 && numero <= tareas.length ){
 
         tareas[numero - 1].completado=true;
