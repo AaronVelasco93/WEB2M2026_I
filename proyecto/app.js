@@ -51,8 +51,75 @@ app.get('/',(req,res)=>{
 });
 
 
+// agregar usuario
+app.post('/add',(req,res)=>{
+    // formulario
+    const {name, email} =req.body;
+
+    const consulta = 'INSERT INTO users (name, email) VALUES(?,?)';
+
+    db.query(consulta,[name,email],(err)=>{
+        if(err){
+            console.error('Error al agregar usuario',err);
+            res.send('Error al agregar usuario');
+        }else{
+            res.redirect('/');
+        }
+    });
+
+});
+
+// solitar datos del usuario por medio del listado
+
+app.get('/edit/:id',(req,res)=>{
+    const {id} = req.params;
+    const consultaId='SELECT * FROM users WHERE id =?';
+
+    db.query(consultaId,[id],(err,results)=>{
+        if(err){
+            console.error('Error a la peticion de datos',err);
+            res.send('Error');
+        }else{
+            res.render('edit',{user:results[0]});
+        }
+
+    });
+    
+
+});
 
 
+// Actualizar
 
+app.post('/update/:id',(req,res)=>{
+        const {id}=req.params;
+        const {name, email} = req.body;
+        const consultaUpdate='UPDATE users SET name = ?, email=? WHERE id=?';
+        db.query(consultaUpdate,[name,email,id],(err)=>{
+            if(err){
+                console.error('Error',err);
+                res.send('Error al actualizar');
+            }else{
+                res.redirect('/');
+            }
+        });
 
+    } );
+
+    // eliminar
+
+app.get('/delete/:id',(req,res)=>{
+    const {id}= req.params;
+    const consultaElimina = 'DELETE FROM users WHERE id =?';
+    db.query(consultaElimina,[id],(err)=>{
+        if(err){
+            console.error('Error',err);
+            res.send('Error');
+        }else{
+            res.redirect('/');
+        }
+    });
+});
+
+app.use(express.static('public'));
 
